@@ -12,14 +12,21 @@ function start() {
 function init() {
     numbers.innerHTML = "";
     gameTable.style.background = "#e6e6e6";
+
+    // 行数(縦)は現在数を表示する行も含めて生成するため+2にする
     for (let i = 0; i < cell + 2; i++) {
         const tr = document.createElement("tr");
+
         if (i === 0 || i === cell + 1) {
+            // 一番上の行を生成する
+            // 右側に残数も表示するので+1する
             for (let j = 0; j < cell + 1; j++) {
                 const th = document.createElement("th");
                 tr.appendChild(th);
             }
         } else {
+            // 表データを生成する
+            // 右側に残数も表示するので+1する
             for (let k = 0; k < cell + 1; k++) {
                 if (k === cell) {
                     const th = document.createElement("th");
@@ -30,8 +37,6 @@ function init() {
                 }
             }
         }
-        //const td = document.createElement("td");
-        //tr.appendChild(td);
         gameTable.appendChild(tr);
     }
 }
