@@ -39,4 +39,14 @@ function init() {
         }
         gameTable.appendChild(tr);
     }
+    // 数字ブロックを生成する
+    for (let i = 0; i < cell * cell; i ++) {
+        const num = document.createElement("div") as HTMLDivElement;
+        num.className = "num";
+        num.draggable = true;
+        num.textContent = String(i + 1);
+        // TODO
+        //num.addEventListener("dragstart", onDragStart);
+        numbers.appendChild(num);
+    }
 }
