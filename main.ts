@@ -49,4 +49,9 @@ function init() {
         //num.addEventListener("dragstart", onDragStart);
         numbers.appendChild(num);
     }
+    const remove = document.createElement("div") as HTMLDivElement;
+    remove.className = "remove";
+    remove.draggable = true;
+    remove.textContent = "✕";
+    numbers.appendChild(remove);
 }
