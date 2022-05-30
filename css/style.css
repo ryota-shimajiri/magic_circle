@@ -25,10 +25,33 @@ button {
     text-align: center;
 }
 
+#numbers {
+    width: 350px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 30px auto;
+}
+
 .num {
     width: 60px;
     height: 60px;
     background: skyblue;
+    border: 2px #242424 solid;
+    text-align: center;
+    font-size: 24px;
+    line-height: 60px;
+}
+
+.remove::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    content: "\f12d";
+}
+
+.remove {
+    width: 60px;
+    height: 60px;
+    background: white;
     border: 2px #242424 solid;
     text-align: center;
     font-size: 24px;

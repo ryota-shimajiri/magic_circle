@@ -34,6 +34,7 @@ function init() {
                     tr.appendChild(th);
                 } else {
                     const td = document.createElement("td");
+                    td.addEventListener("drop", onDrop);
                     tr.appendChild(td);
                 }
             }
@@ -46,14 +47,13 @@ function init() {
         num.className = "num";
         num.draggable = true;
         num.textContent = String(i + 1);
-        // TODO
         num.addEventListener("dragstart", onDragStart);
         numbers.appendChild(num);
     }
     const remove = document.createElement("div") as HTMLDivElement;
     remove.className = "remove";
     remove.draggable = true;
-    remove.textContent = "✕";
+    //remove.textContent = "✕";
     numbers.appendChild(remove);
 }
 
@@ -64,3 +64,9 @@ function onDragStart(e) {
     e.stopPropagation();
 }
 
+function onDrop(e) {
+    console.log("test");
+    // dataTransferからテキスト情報を取得
+    const text = e.dataTransfer.getData("text");
+    const num = document.querySelectorAll(".num");
+}

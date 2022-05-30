@@ -31,6 +31,7 @@ function init() {
                 }
                 else {
                     var td = document.createElement("td");
+                    td.addEventListener("drop", onDrop);
                     tr.appendChild(td);
                 }
             }
@@ -43,14 +44,13 @@ function init() {
         num.className = "num";
         num.draggable = true;
         num.textContent = String(i + 1);
-        // TODO
         num.addEventListener("dragstart", onDragStart);
         numbers.appendChild(num);
     }
     var remove = document.createElement("div");
     remove.className = "remove";
     remove.draggable = true;
-    remove.textContent = "✕";
+    //remove.textContent = "✕";
     numbers.appendChild(remove);
 }
 function onDragStart(e) {
@@ -58,4 +58,10 @@ function onDragStart(e) {
     e.dataTransfer.setData("text", e.target.textContent);
     // 予期せぬ伝達を防ぐ
     e.stopPropagation();
+}
+function onDrop(e) {
+    console.log("test");
+    // dataTransferからテキスト情報を取得
+    var text = e.dataTransfer.getData("text");
+    var num = document.querySelectorAll(".num");
 }
