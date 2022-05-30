@@ -19,8 +19,18 @@ button {
 #gameTable td {
     width: 60px;
     height: 60px;
-    border: solid 3px white;
+    border: 2px #242424 solid;
     font-size: 36px;
     font-weight: bold;
     text-align: center;
+}
+
+.num {
+    width: 60px;
+    height: 60px;
+    background: skyblue;
+    border: 2px #242424 solid;
+    text-align: center;
+    font-size: 24px;
+    line-height: 60px;
 }

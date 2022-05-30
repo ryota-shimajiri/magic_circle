@@ -9,6 +9,7 @@ function start() {
 function init() {
     numbers.innerHTML = "";
     gameTable.style.background = "#e6e6e6";
+    gameTable.style.border = "2px #242424 solid";
     // 行数(縦)は現在数を表示する行も含めて生成するため+2にする
     for (var i = 0; i < cell + 2; i++) {
         var tr = document.createElement("tr");
@@ -43,7 +44,7 @@ function init() {
         num.draggable = true;
         num.textContent = String(i + 1);
         // TODO
-        //num.addEventListener("dragstart", onDragStart);
+        num.addEventListener("dragstart", onDragStart);
         numbers.appendChild(num);
     }
     var remove = document.createElement("div");
@@ -51,4 +52,10 @@ function init() {
     remove.draggable = true;
     remove.textContent = "✕";
     numbers.appendChild(remove);
+}
+function onDragStart(e) {
+    // dataTransferにテキスト情報を保持させる
+    e.dataTransfer.setData("text", e.target.textContent);
+    // 予期せぬ伝達を防ぐ
+    e.stopPropagation();
 }
