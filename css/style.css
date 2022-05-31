@@ -57,3 +57,11 @@ button {
     font-size: 24px;
     line-height: 60px;
 }
+
+.select {
+    opacity: 0.2;
+    pointer-events: none;
+}
+.put {
+    background: rgb(163, 216, 237);
+}

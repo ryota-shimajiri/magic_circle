@@ -4,10 +4,11 @@ var startBtn = document.getElementById("start");
 var cell = 3;
 startBtn.addEventListener("click", start);
 function start() {
+    gameTable.innerHTML = "";
+    numbers.innerHTML = "";
     init();
 }
 function init() {
-    numbers.innerHTML = "";
     gameTable.style.background = "#e6e6e6";
     gameTable.style.border = "2px #242424 solid";
     // 行数(縦)は現在数を表示する行も含めて生成するため+2にする
@@ -32,6 +33,9 @@ function init() {
                 else {
                     var td = document.createElement("td");
                     td.addEventListener("drop", onDrop);
+                    td.addEventListener("dragover", onDragover);
+                    td.addEventListener("dragenter", onDragenter);
+                    td.addEventListener("dragleave", onDragleave);
                     tr.appendChild(td);
                 }
             }
@@ -50,8 +54,21 @@ function init() {
     var remove = document.createElement("div");
     remove.className = "remove";
     remove.draggable = true;
-    //remove.textContent = "✕";
     numbers.appendChild(remove);
+}
+// ドラッグ操作 要素を通過中
+function onDragover(e) {
+    e.preventDefault();
+}
+// ドラッグ操作 要素へ進入 
+function onDragenter(e) {
+    // putのクラス名を追加
+    this.classList.toggle("put");
+}
+// ドラッグ操作 要素から退出
+function onDragleave(e) {
+    // 色が残らない様にクラス名を削除
+    this.classList.toggle("put");
 }
 function onDragStart(e) {
     // dataTransferにテキスト情報を保持させる
@@ -64,4 +81,22 @@ function onDrop(e) {
     // dataTransferからテキスト情報を取得
     var text = e.dataTransfer.getData("text");
     var num = document.querySelectorAll(".num");
+    num.forEach(function (value) {
+        if (value.textContent === text) {
+            value.classList.add("select");
+        }
+        else if (value.textContent === e.target.textContent) {
+            value.classList.remove("select");
+        }
+    });
+    e.target.textContent = text;
+    this.classList.remove("put");
+}
+function checkAnswer() {
+    var total = [];
+    // HTMLからthを取得
+    var th = document.querySelector("th");
+    for (var i = 0; i < cell + 1; i++) {
+        total.push(gameTable.rows[0].cells[i].textContent);
+    }
 }

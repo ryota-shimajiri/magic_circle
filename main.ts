@@ -1,16 +1,17 @@
 const numbers = document.getElementById("numbers");
-const gameTable = document.getElementById("gameTable");
+const gameTable = document.getElementById("gameTable") as HTMLTableElement;
 const startBtn: any = document.getElementById("start");
 const cell:number = 3;
 
 startBtn.addEventListener("click", start);
 
 function start() {
+    gameTable.innerHTML = "";
+    numbers.innerHTML = "";
     init();
 }
 
 function init() {
-    numbers.innerHTML = "";
     gameTable.style.background = "#e6e6e6";
     gameTable.style.border = "2px #242424 solid";
 
@@ -35,6 +36,9 @@ function init() {
                 } else {
                     const td = document.createElement("td");
                     td.addEventListener("drop", onDrop);
+                    td.addEventListener("dragover", onDragover);
+                    td.addEventListener("dragenter", onDragenter);
+                    td.addEventListener("dragleave", onDragleave);
                     tr.appendChild(td);
                 }
             }
@@ -53,8 +57,24 @@ function init() {
     const remove = document.createElement("div") as HTMLDivElement;
     remove.className = "remove";
     remove.draggable = true;
-    //remove.textContent = "✕";
     numbers.appendChild(remove);
+}
+
+// ドラッグ操作 要素を通過中
+function onDragover(e) {
+    e.preventDefault();
+}
+
+// ドラッグ操作 要素へ進入 
+function onDragenter(e) {
+    // putのクラス名を追加
+    this.classList.toggle("put");
+}
+
+// ドラッグ操作 要素から退出
+function onDragleave(e) {
+    // 色が残らない様にクラス名を削除
+    this.classList.toggle("put");
 }
 
 function onDragStart(e) {
@@ -69,4 +89,22 @@ function onDrop(e) {
     // dataTransferからテキスト情報を取得
     const text = e.dataTransfer.getData("text");
     const num = document.querySelectorAll(".num");
+    num.forEach((value) => {
+        if (value.textContent === text) {
+            value.classList.add("select");
+        } else if (value.textContent === e.target.textContent) {
+            value.classList.remove("select");
+        }
+    });
+    e.target.textContent = text;
+    this.classList.remove("put");
+}
+
+function checkAnswer() {
+    let total = [];
+    // HTMLからthを取得
+    const th = document.querySelector("th");
+    for (let i = 0; i < cell + 1; i++) {
+        total.push(gameTable.rows[0].cells[i].textContent);
+    }
 }
