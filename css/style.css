@@ -9,6 +9,8 @@ button {
 }
 
 #gameTable {
+    height: 268px;
+    width: 240px;
     margin:auto;
 }
 

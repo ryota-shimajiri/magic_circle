@@ -1,7 +1,7 @@
 const numbers = document.getElementById("numbers");
 const gameTable = document.getElementById("gameTable") as HTMLTableElement;
 const startBtn: any = document.getElementById("start");
-const cell:number = 3;
+const cell: number = 3;
 
 startBtn.addEventListener("click", start);
 
@@ -46,7 +46,7 @@ function init() {
         gameTable.appendChild(tr);
     }
     // 数字ブロックを生成する
-    for (let i = 0; i < cell * cell; i ++) {
+    for (let i = 0; i < cell * cell; i++) {
         const num = document.createElement("div") as HTMLDivElement;
         num.className = "num";
         num.draggable = true;
@@ -98,6 +98,8 @@ function onDrop(e) {
     });
     e.target.textContent = text;
     this.classList.remove("put");
+    numberCalculator();
+    checkAnswer();
 }
 
 function checkAnswer() {
@@ -106,5 +108,40 @@ function checkAnswer() {
     const th = document.querySelector("th");
     for (let i = 0; i < cell + 1; i++) {
         total.push(gameTable.rows[0].cells[i].textContent);
+        total.push(gameTable.rows[i + 1].cells[cell].textContent);
     }
+    if (total.every((v) => v === total[0] && total[0] !== "0")) {
+        gameTable.style.background = "pink";
+    } else {
+        gameTable.style.background = "#e6e6e6";
+    }
+}
+
+function numberCalculator() {
+    let z: number = 0;
+    let z2: number = 0;
+    for (let i = 0; i < cell + 1; i++) {
+        let x: number = 0;
+        let y: number = 0;
+        for (let j = 0; j < cell; j++) {
+            // 横計算
+            x += Number(gameTable.rows[i].cells[j].textContent);
+            // 縦計算
+            y += Number(gameTable.rows[j + 1].cells[i].textContent);
+        }
+        // 横合計表示
+        gameTable.rows[i].cells[cell].innerHTML = `<div class="total">${x}</div>`;
+        // 縦合計表示
+        gameTable.rows[0].cells[i].innerHTML = `<div class="total">${y}</div>`;
+    }
+    for (let k = 0; k < cell; k++) {
+        // 右斜め計算
+        z += Number(gameTable.rows[cell - k].cells[k].textContent); // 右斜め計算
+        // 左斜め計算
+        z2 += Number(gameTable.rows[k + 1].cells[k].textContent); // 左斜め計算
+    }
+    // 右斜め合計表示
+    gameTable.rows[0].cells[cell].innerHTML = `<div class="total">${z}</div>`;
+    // 左斜め合計表示
+    gameTable.rows[cell + 1].cells[cell].innerHTML = `<div class="total">${z2}</div>`; 
 }

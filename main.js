@@ -91,6 +91,8 @@ function onDrop(e) {
     });
     e.target.textContent = text;
     this.classList.remove("put");
+    numberCalculator();
+    checkAnswer();
 }
 function checkAnswer() {
     var total = [];
@@ -98,5 +100,40 @@ function checkAnswer() {
     var th = document.querySelector("th");
     for (var i = 0; i < cell + 1; i++) {
         total.push(gameTable.rows[0].cells[i].textContent);
+        total.push(gameTable.rows[i + 1].cells[cell].textContent);
     }
+    if (total.every(function (v) { return v === total[0] && total[0] !== "0"; })) {
+        gameTable.style.background = "pink";
+    }
+    else {
+        gameTable.style.background = "#e6e6e6";
+    }
+}
+function numberCalculator() {
+    var z = 0;
+    var z2 = 0;
+    for (var i = 0; i < cell + 1; i++) {
+        var x = 0;
+        var y = 0;
+        for (var j = 0; j < cell; j++) {
+            // 横計算
+            x += Number(gameTable.rows[i].cells[j].textContent);
+            // 縦計算
+            y += Number(gameTable.rows[j + 1].cells[i].textContent);
+        }
+        // 横合計表示
+        gameTable.rows[i].cells[cell].innerHTML = "<div class=\"total\">".concat(x, "</div>");
+        // 縦合計表示
+        gameTable.rows[0].cells[i].innerHTML = "<div class=\"total\">".concat(y, "</div>");
+    }
+    for (var k = 0; k < cell; k++) {
+        // 右斜め計算
+        z += Number(gameTable.rows[cell - k].cells[k].textContent); // 右斜め計算
+        // 左斜め計算
+        z2 += Number(gameTable.rows[k + 1].cells[k].textContent); // 左斜め計算
+    }
+    // 右斜め合計表示
+    gameTable.rows[0].cells[cell].innerHTML = "<div class=\"total\">".concat(z, "</div>");
+    // 左斜め合計表示
+    gameTable.rows[cell + 1].cells[cell].innerHTML = "<div class=\"total\">".concat(z2, "</div>");
 }
