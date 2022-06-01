@@ -4,6 +4,12 @@ button {
     width: 150px;
 }
 
+a {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+}
+
 .settings {
     margin: 30px auto 30px;
 }

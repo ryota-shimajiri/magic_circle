@@ -111,7 +111,7 @@ function checkAnswer() {
         total.push(gameTable.rows[i + 1].cells[cell].textContent);
     }
     if (total.every((v) => v === total[0] && total[0] !== "0")) {
-        gameTable.style.background = "pink";
+        setTimeout(() => alert("CLEAR!!"), 1);
     } else {
         gameTable.style.background = "#e6e6e6";
     }
@@ -125,6 +125,7 @@ function numberCalculator() {
         let y: number = 0;
         for (let j = 0; j < cell; j++) {
             // 横計算
+            console.log(gameTable.rows[i]);
             x += Number(gameTable.rows[i].cells[j].textContent);
             // 縦計算
             y += Number(gameTable.rows[j + 1].cells[i].textContent);

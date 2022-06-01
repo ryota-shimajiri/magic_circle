@@ -103,7 +103,7 @@ function checkAnswer() {
         total.push(gameTable.rows[i + 1].cells[cell].textContent);
     }
     if (total.every(function (v) { return v === total[0] && total[0] !== "0"; })) {
-        gameTable.style.background = "pink";
+        setTimeout(function () { return alert("CLEAR!!"); }, 1);
     }
     else {
         gameTable.style.background = "#e6e6e6";
@@ -117,6 +117,7 @@ function numberCalculator() {
         var y = 0;
         for (var j = 0; j < cell; j++) {
             // 横計算
+            console.log(gameTable.rows[i]);
             x += Number(gameTable.rows[i].cells[j].textContent);
             // 縦計算
             y += Number(gameTable.rows[j + 1].cells[i].textContent);
