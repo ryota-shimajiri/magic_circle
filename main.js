@@ -9,7 +9,7 @@ function start() {
     init();
 }
 function init() {
-    gameTable.style.background = "#e6e6e6";
+    gameTable.style.background = "whitesmoke";
     gameTable.style.border = "2px #242424 solid";
     // 行数(縦)は現在数を表示する行も含めて生成するため+2にする
     for (var i = 0; i < cell + 2; i++) {
@@ -77,16 +77,12 @@ function onDragStart(e) {
     e.stopPropagation();
 }
 function onDrop(e) {
-    console.log("test");
     // dataTransferからテキスト情報を取得
     var text = e.dataTransfer.getData("text");
     var num = document.querySelectorAll(".num");
     num.forEach(function (value) {
-        if (value.textContent === text) {
-            value.classList.add("select");
-        }
-        else if (value.textContent === e.target.textContent) {
-            value.classList.remove("select");
+        if (value.textContent === text || value.textContent === e.target.textContent) {
+            value.classList.toggle("select");
         }
     });
     e.target.textContent = text;
@@ -96,45 +92,45 @@ function onDrop(e) {
 }
 function checkAnswer() {
     var total = [];
-    // HTMLからthを取得
-    var th = document.querySelector("th");
     for (var i = 0; i < cell + 1; i++) {
+        //  横に並んだ計算(左斜めを含む)
         total.push(gameTable.rows[0].cells[i].textContent);
+        //  縦に並んだ計算(左斜めを含まない)
+        console.log(gameTable.rows[i + 1].cells[cell].textContent);
         total.push(gameTable.rows[i + 1].cells[cell].textContent);
     }
     if (total.every(function (v) { return v === total[0] && total[0] !== "0"; })) {
         setTimeout(function () { return alert("CLEAR!!"); }, 1);
     }
     else {
-        gameTable.style.background = "#e6e6e6";
+        gameTable.style.background = "whitesmoke";
     }
 }
 function numberCalculator() {
-    var z = 0;
-    var z2 = 0;
     for (var i = 0; i < cell + 1; i++) {
         var x = 0;
         var y = 0;
         for (var j = 0; j < cell; j++) {
             // 横計算
-            console.log(gameTable.rows[i]);
             x += Number(gameTable.rows[i].cells[j].textContent);
             // 縦計算
             y += Number(gameTable.rows[j + 1].cells[i].textContent);
         }
         // 横合計表示
-        gameTable.rows[i].cells[cell].innerHTML = "<div class=\"total\">".concat(x, "</div>");
+        gameTable.rows[i].cells[cell].innerHTML = String(x);
         // 縦合計表示
-        gameTable.rows[0].cells[i].innerHTML = "<div class=\"total\">".concat(y, "</div>");
+        gameTable.rows[0].cells[i].innerHTML = String(y);
     }
+    var rightDiagonally = 0;
+    var leftDiagonally = 0;
     for (var k = 0; k < cell; k++) {
         // 右斜め計算
-        z += Number(gameTable.rows[cell - k].cells[k].textContent); // 右斜め計算
+        rightDiagonally += Number(gameTable.rows[cell - k].cells[k].textContent);
         // 左斜め計算
-        z2 += Number(gameTable.rows[k + 1].cells[k].textContent); // 左斜め計算
+        leftDiagonally += Number(gameTable.rows[k + 1].cells[k].textContent);
     }
     // 右斜め合計表示
-    gameTable.rows[0].cells[cell].innerHTML = "<div class=\"total\">".concat(z, "</div>");
+    gameTable.rows[0].cells[cell].innerHTML = String(rightDiagonally);
     // 左斜め合計表示
-    gameTable.rows[cell + 1].cells[cell].innerHTML = "<div class=\"total\">".concat(z2, "</div>");
+    gameTable.rows[cell + 1].cells[cell].innerHTML = String(leftDiagonally);
 }
