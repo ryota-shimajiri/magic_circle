@@ -18,8 +18,7 @@ function init() {
             // 一番上の行を生成する
             // 右側に残数も表示するので+1する
             for (var j = 0; j < cell + 1; j++) {
-                var th = document.createElement("th");
-                tr.appendChild(th);
+                tr.appendChild(document.createElement("th"));
             }
         }
         else {
@@ -27,8 +26,7 @@ function init() {
             // 右側に残数も表示するので+1する
             for (var k = 0; k < cell + 1; k++) {
                 if (k === cell) {
-                    var th = document.createElement("th");
-                    tr.appendChild(th);
+                    tr.appendChild(document.createElement("th"));
                 }
                 else {
                     var td = document.createElement("td");

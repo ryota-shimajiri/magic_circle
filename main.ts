@@ -23,18 +23,16 @@ function init() {
             // 一番上の行を生成する
             // 右側に残数も表示するので+1する
             for (let j = 0; j < cell + 1; j++) {
-                const th: HTMLTableCellElement = document.createElement("th") as HTMLTableCellElement;
-                tr.appendChild(th);
+                tr.appendChild(document.createElement("th") as HTMLTableCellElement);
             }
         } else {
             // 表データを生成する
             // 右側に残数も表示するので+1する
             for (let k = 0; k < cell + 1; k++) {
                 if (k === cell) {
-                    const th: HTMLTableCellElement = document.createElement("th");
-                    tr.appendChild(th);
+                    tr.appendChild(document.createElement("th") as HTMLTableCellElement);
                 } else {
-                    const td: HTMLTableCellElement = document.createElement("td") as HTMLTableCellElement;
+                    const td: HTMLTableCellElement = document.createElement("td");
                     td.addEventListener("drop", onDrop);
                     td.addEventListener("dragover", onDragover);
                     td.addEventListener("dragenter", onDragenter);
@@ -47,14 +45,14 @@ function init() {
     }
     // 数字ブロックを生成する
     for (let i = 0; i < cell * cell; i++) {
-        const num: HTMLDivElement = document.createElement("div") as HTMLDivElement;
+        const num: HTMLDivElement = document.createElement("div");
         num.className = "num";
         num.draggable = true;
         num.textContent = String(i + 1);
         num.addEventListener("dragstart", onDragStart);
         numbers.appendChild(num);
     }
-    const remove: HTMLDivElement = document.createElement("div") as HTMLDivElement;
+    const remove: HTMLDivElement = document.createElement("div");
     remove.className = "remove";
     remove.draggable = true;
     numbers.appendChild(remove);
@@ -102,7 +100,6 @@ function onDrop(e) {
 function checkAnswer() {
     let total: string[] = [];
     for (let i = 0; i < cell + 1; i++) {
-        
         //  横に並んだ計算(左斜めを含む)
         total.push(gameTable.rows[0].cells[i].textContent);
         //  縦に並んだ計算(左斜めを含まない)
