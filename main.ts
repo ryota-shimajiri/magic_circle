@@ -1,4 +1,4 @@
-const numbers = document.getElementById("numbers");
+const numbers = document.getElementById("numbers") as HTMLElement;
 const gameTable = document.getElementById("gameTable") as HTMLTableElement;
 const startBtn: any = document.getElementById("start");
 const cell: number = 3;
@@ -101,10 +101,15 @@ function checkAnswer() {
     let total: string[] = [];
     for (let i = 0; i < cell + 1; i++) {
         //  横に並んだ計算(左斜めを含む)
-        total.push(gameTable.rows[0].cells[i].textContent);
+        const total_x = gameTable.rows[0].cells[i].textContent
+        if (total_x) {
+            total.push(total_x);
+        }
         //  縦に並んだ計算(左斜めを含まない)
-        console.log(gameTable.rows[i + 1].cells[cell].textContent);
-        total.push(gameTable.rows[i + 1].cells[cell].textContent);
+        const total_y = gameTable.rows[i + 1].cells[cell].textContent;
+        if (total_y) {
+            total.push(total_y);
+        }
     }
     if (total.every((v) => v === total[0] && total[0] !== "0")) {
         setTimeout(() => alert("CLEAR!!"), 1);
